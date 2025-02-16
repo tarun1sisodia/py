@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "264634808261",
+    "project_id": "charonauthen",
+    "storage_bucket": "charonauthen.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264634808261:android:0990f204a2db15f6d63dac",
+        "android_client_info": {
+          "package_name": "com.tarun.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264634808261-ao96p8skcob5d0maiovu9gsvpsah2dh1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarun.app",
+            "certificate_hash": "f412954b358c478e2a10944c69393d5f6327142c"
+          }
+        },
+        {
+          "client_id": "264634808261-dqedu75dnh1ooo9j0ilt1iu0h2a2iujp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8o1JIqysfnCX50tVrv9CLsYv7LfkeWE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264634808261-dqedu75dnh1ooo9j0ilt1iu0h2a2iujp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "264634808261-iqkjf19v7g3eh18umv4eh3ou8kp0u9bk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tarun.app",
+                "app_store_id": "00553399"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

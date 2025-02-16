@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>264634808261-iqkjf19v7g3eh18umv4eh3ou8kp0u9bk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.264634808261-iqkjf19v7g3eh18umv4eh3ou8kp0u9bk</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>264634808261-ao96p8skcob5d0maiovu9gsvpsah2dh1.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBZAnv4-5pFsIKiXMTKPHLqLzkxSlVOE-A</string>
+	<key>GCM_SENDER_ID</key>
+	<string>264634808261</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.tarun.app</string>
+	<key>PROJECT_ID</key>
+	<string>charonauthen</string>
+	<key>STORAGE_BUCKET</key>
+	<string>charonauthen.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:264634808261:ios:c2ba18d9f29a82c0d63dac</string>
+</dict>
+</plist>

@@ -1,0 +1,18 @@
+{
+    "server": {
+        "port": "8080",
+        "mode": "debug"
+    },
+    "database": {
+        "host": "localhost",
+        "port": "3306",
+        "user": "smart_campus",
+        "password": "smart_campus_password",
+        "dbname": "smart_campus"
+    },
+    "jwt": {
+        "secret": "your-secret-key-here",
+        "token_expiry": 24,
+        "refresh_expiry": 7
+    }
+} 

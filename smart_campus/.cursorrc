@@ -1,0 +1,201 @@
+{
+  "rules": {
+    "language": "dart",
+    "framework": "flutter",
+    "architecture": {
+      "pattern": "clean_architecture",
+      "layers": [
+        "presentation",
+        "domain",
+        "data",
+        "core",
+        "config",
+        "di"
+      ]
+    },
+    "style": {
+      "indentation": 2,
+      "maxLineLength": 80
+    },
+    "patterns": {
+      "config": "lib/config/*",
+      "core": {
+        "constants": "lib/core/constants/*.dart",
+        "errors": "lib/core/errors/*.dart",
+        "utils": "lib/core/utils/*.dart",
+        "services": "lib/core/services/*.dart"
+      },
+      "data": {
+        "models": "lib/data/models/*.dart",
+        "repositories": "lib/data/repositories/*.dart",
+        "datasources": "lib/data/datasources/*.dart"
+      },
+      "domain": {
+        "entities": "lib/domain/entities/*.dart",
+        "repositories": "lib/domain/repositories/*.dart",
+        "usecases": "lib/domain/usecases/*.dart"
+      },
+      "presentation": {
+        "screens": {
+          "auth": "lib/presentation/screens/auth/*.dart",
+          "teacher": "lib/presentation/screens/teacher/*.dart",
+          "student": "lib/presentation/screens/student/*.dart"
+        },
+        "widgets": {
+          "common": "lib/presentation/widgets/common/*.dart",
+          "teacher": "lib/presentation/widgets/teacher/*.dart",
+          "student": "lib/presentation/widgets/student/*.dart"
+        },
+        "bloc": "lib/presentation/bloc/*.dart"
+      }
+    },
+    "naming": {
+      "blocs": "*_bloc.dart",
+      "events": "*_event.dart",
+      "states": "*_state.dart",
+      "models": "*_model.dart",
+      "entities": "*_entity.dart",
+      "repositories": "*_repository.dart",
+      "datasources": "*_datasource.dart",
+      "usecases": "*_usecase.dart",
+      "screens": "*_screen.dart",
+      "widgets": "*_widget.dart"
+    },
+    "dependencies": {
+      "state_management": "flutter_bloc",
+      "dependency_injection": "get_it",
+      "network": "dio",
+      "local_storage": ["shared_preferences", "sqflite"],
+      "location": "geolocator",
+      "wifi": "network_info_plus",
+      "utils": ["uuid", "intl", "json_annotation"]
+    },
+    "features": {
+      "auth": ["login", "signup", "otp", "device_binding"],
+      "teacher": ["dashboard", "session_management", "attendance_monitoring"],
+      "student": ["dashboard", "attendance_marking"],
+      "common": ["location_verification", "wifi_verification", "offline_sync"]
+    },
+    "database": {
+      "type": "mysql",
+      "tables": [
+        "users",
+        "courses",
+        "teacher_course_assignments",
+        "attendance_sessions",
+        "attendance_records",
+        "device_bindings",
+        "authentication_logs",
+        "otp_verifications",
+        "system_settings"
+      ]
+    }
+  },
+  "development_phases": {
+    "phase1": {
+      "name": "Project Setup and Basic Structure",
+      "duration": "1-2 days",
+      "tasks": [
+        "Initialize Flutter Project",
+        "Set up project structure",
+        "Add Essential Dependencies"
+      ]
+    },
+    "phase2": {
+      "name": "Core Features Implementation",
+      "duration": "4-5 days",
+      "tasks": [
+        "Authentication Module",
+        "Database Layer",
+        "Network Layer",
+        "Security Features",
+        "Onboarding & UI"
+      ]
+    },
+    "phase3": {
+      "name": "Teacher Features",
+      "duration": "4-5 days",
+      "tasks": [
+        "Teacher Dashboard",
+        "Session Creation",
+        "Attendance Monitoring"
+      ]
+    },
+    "phase4": {
+      "name": "Student Features",
+      "duration": "3-4 days",
+      "tasks": [
+        "Student Dashboard",
+        "Attendance Marking"
+      ]
+    },
+    "phase5": {
+      "name": "Location and WiFi Services",
+      "duration": "2-3 days",
+      "tasks": [
+        "Location Services",
+        "WiFi Verification"
+      ]
+    },
+    "phase6": {
+      "name": "Data Synchronization",
+      "duration": "2-3 days",
+      "tasks": [
+        "Offline Support",
+        "Real-time Updates"
+      ]
+    },
+    "phase7": {
+      "name": "Testing and Security",
+      "duration": "3-4 days",
+      "tasks": [
+        "Unit Testing",
+        "Integration Testing",
+        "Security Implementation"
+      ]
+    },
+    "phase8": {
+      "name": "UI/UX Refinement",
+      "duration": "2-3 days",
+      "tasks": [
+        "Design Polish",
+        "Error Handling"
+      ]
+    },
+    "phase9": {
+      "name": "Performance Optimization",
+      "duration": "2-3 days",
+      "tasks": [
+        "Code Optimization",
+        "Resource Optimization"
+      ]
+    },
+    "phase10": {
+      "name": "Deployment and Documentation",
+      "duration": "2-3 days",
+      "tasks": [
+        "App Release",
+        "Documentation"
+      ]
+    },
+    "phase11": {
+      "name": "Performance & Monitoring Setup",
+      "duration": "2-3 days",
+      "tasks": [
+        "Performance Monitoring",
+        "Analytics Integration",
+        "Alerting System"
+      ]
+    },
+    "phase12": {
+      "name": "Responsive Design Implementation",
+      "duration": "3-4 days",
+      "tasks": [
+        "Layout Grid System",
+        "Device-Specific Layouts",
+        "Adaptive Components",
+        "Testing & Optimization"
+      ]
+    }
+  }
+} 
