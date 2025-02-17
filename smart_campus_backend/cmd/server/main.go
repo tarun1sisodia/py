@@ -13,6 +13,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"google.golang.org/api/option"
+
+	"smart_campus_backend/config"
+	"smart_campus_backend/internal/api"
+	"smart_campus_backend/internal/db"
+	"smart_campus_backend/internal/services"
 )
 
 func main() {
@@ -21,71 +26,47 @@ func main() {
 		log.Printf("Warning: .env file not found")
 	}
 
-	// Set Gin mode
-	if os.Getenv("GIN_MODE") == "release" {
-		gin.SetMode(gin.ReleaseMode)
+	// Load configuration
+	cfg, err := config.Load()
+	if err != nil {
+		log.Fatalf("Error loading config: %v\n", err)
 	}
+
+	// Set Gin mode
+	gin.SetMode(cfg.Server.Mode)
 
 	// Initialize Firebase Admin SDK
-	opt := option.WithCredentialsFile(os.Getenv("FIREBASE_CREDENTIALS_PATH"))
-	app, err := firebase.NewApp(context.Background(), nil, opt)
+	firebaseApp, err := initializeFirebase(cfg.Firebase.CredentialsPath)
 	if err != nil {
-		log.Fatalf("Error initializing Firebase app: %v\n", err)
+		log.Fatalf("Error initializing Firebase: %v\n", err)
 	}
 
-	// Initialize Firebase Auth
-	auth, err := app.Auth(context.Background())
+	// Initialize database
+	db, err := db.NewDatabase(cfg.Database)
 	if err != nil {
-		log.Fatalf("Error getting Firebase Auth client: %v\n", err)
+		log.Fatalf("Error connecting to database: %v\n", err)
 	}
+	defer db.Close()
 
-	// Initialize router
+	// Initialize repositories
+	repos := initializeRepositories(db)
+
+	// Initialize services
+	services := initializeServices(repos, firebaseApp)
+
+	// Initialize router and API
 	router := gin.Default()
+	api.InitializeAPI(router, services, cfg)
 
-	// Add middleware
-	router.Use(gin.Recovery())
-	router.Use(gin.Logger())
-
-	// Add CORS middleware
-	router.Use(func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	})
-
-	// Health check endpoint
-	router.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"status": "ok",
-			"time":   time.Now().Format(time.RFC3339),
-		})
-	})
-
-	// Initialize routes
-	// TODO: Add route initialization here
-
-	// Get port from environment variable or use default
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
+	// Start server
 	srv := &http.Server{
-		Addr:    ":" + port,
+		Addr:    ":" + cfg.Server.Port,
 		Handler: router,
 	}
 
 	// Start server in a goroutine
 	go func() {
-		log.Printf("Server starting on port %s\n", port)
+		log.Printf("Server starting on port %s\n", cfg.Server.Port)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Error starting server: %v\n", err)
 		}
@@ -104,4 +85,38 @@ func main() {
 	}
 
 	log.Println("Server exiting")
+}
+
+func initializeFirebase(credentialsPath string) (*firebase.App, error) {
+	opt := option.WithCredentialsFile(credentialsPath)
+	app, err := firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		return nil, err
+	}
+	return app, nil
+}
+
+func initializeRepositories(db *db.Database) *services.Repositories {
+	return &services.Repositories{
+		UserRepo: db.NewUserRepository(),
+		/*SessionRepo:    db.NewSessionRepository(),
+		CourseRepo:     db.NewCourseRepository(),
+		DeviceRepo:     db.NewDeviceRepository(),
+		AttendanceRepo: db.NewAttendanceRepository(),*/
+	}
+}
+
+func initializeServices(repos *services.Repositories, firebaseApp *firebase.App) *services.Services {
+	auth, err := firebaseApp.Auth(context.Background())
+	if err != nil {
+		log.Fatalf("Error getting Firebase Auth client: %v\n", err)
+	}
+
+	return &services.Services{
+		AuthService: services.NewAuthService(repos.UserRepo, auth),
+		/*SessionService:    services.NewSessionService(repos.SessionRepo, repos.AttendanceRepo),
+		CourseService:     services.NewCourseService(repos.CourseRepo),
+		DeviceService:     services.NewDeviceService(repos.DeviceRepo),
+		AttendanceService: services.NewAttendanceService(repos.AttendanceRepo),*/
+	}
 }

@@ -1,0 +1,34 @@
+-- Create test database
+CREATE DATABASE IF NOT EXISTS smart_campus_test;
+USE smart_campus_test;
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) PRIMARY KEY,
+    role VARCHAR(10) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(20) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    firebase_uid VARCHAR(128) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Devices table
+CREATE TABLE IF NOT EXISTS devices (
+    id VARCHAR(36) PRIMARY KEY,
+    user_id VARCHAR(36) NOT NULL,
+    device_id VARCHAR(255) UNIQUE NOT NULL,
+    device_name VARCHAR(100) NOT NULL,
+    device_model VARCHAR(100) NOT NULL,
+    device_type VARCHAR(50) NOT NULL,
+    os_version VARCHAR(50) NOT NULL,
+    app_version VARCHAR(20) NOT NULL,
+    last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_verified BOOLEAN DEFAULT FALSE,
+    status VARCHAR(20) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+); 
